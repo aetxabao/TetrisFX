@@ -1,0 +1,89 @@
+@startuml
+class com.aetxabao.tetrisfx.Main {
++ {static} void main(String[])
+}
+class com.aetxabao.tetrisfx.Conf {
++ {static} int BOARD_WIDTH
++ {static} int BOARD_HEIGHT
++ {static} int TARGET_LINES
++ {static} double GAME_SPEED
+- <<Create>> Conf()
+}
+class com.aetxabao.tetrisfx.Board {
+- int width
+- int height
+- Piece piece
+- ETetromino[][] matrix
+- Piece nextPiece
+- int lines
++ <<Create>> Board(int,int)
+- void init()
++ int getWidth()
++ int getHeight()
++ ETetromino[][] getBoardWithPiece()
++ Piece getNextPiece()
++ int getLines()
++ void pieceDoes(EAction)
++ boolean canPieceDo(EAction)
+- boolean couldHave(Piece)
++ void mergePiece()
++ boolean newPiece()
++ void removeLines()
+}
+class com.aetxabao.tetrisfx.Game {
+- {static} EGameStatus gameStatus
+- {static} Board board
+- {static} String pressedKey
+- {static} GraphicsContext gc
+- long deltaTime
++ {static} void main(String[])
++ void start(Stage)
+~ {static} void game_loop(boolean)
+~ {static} void init_game()
+~ {static} void render_game()
+~ {static} void process_input()
+~ {static} void update_game()
+~ {static} void finish_game()
+}
+class com.aetxabao.tetrisfx.Piece {
+- int[][][] SHAPES
+- ETetromino tetromino
+- int[] pos
+- int[][] coords
++ <<Create>> Piece()
++ void setTetromino(ETetromino)
++ ETetromino getTetromino()
++ Piece clone()
++ int[] getPos()
++ void setX(int)
++ void does(EAction)
+- void rotate()
++ int[][] getCoords()
++ ETetromino[][] getETetrominos()
++ String toString()
+}
+class com.aetxabao.tetrisfx.Input {
+~ {static} EGameStatus waitStart(String)
+~ {static} EAction readAction(String)
+~ {static} EGameStatus waitRestart(String,EGameStatus)
+}
+class com.aetxabao.tetrisfx.Renderer {
++ {static} int G_BORDER_WIDTH
++ {static} int G_LINE_WIDTH
++ {static} int G_BOX_SIZE
++ {static} int G_CANVAS_WIDTH
++ {static} int G_CANVAS_HEIGHT
++ {static} String[] G_INIT_TXTS
++ {static} String[] G_YOUWON_TXTS
++ {static} String[] G_YOULOST_TXTS
++ {static} void clearScreen(GraphicsContext)
++ {static} void drawInit(GraphicsContext)
++ {static} void drawBoard(GraphicsContext,Board)
+- {static} void drawResult(GraphicsContext,Board,String[])
++ {static} void drawYouWon(GraphicsContext,Board)
++ {static} void drawYouLost(GraphicsContext,Board)
+}
+
+
+javafx.application.Application <|-- com.aetxabao.tetrisfx.Game
+@enduml
